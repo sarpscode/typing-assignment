@@ -9,20 +9,59 @@ fourthKbRow = document.getElementById("kb-row-four")
 
 fifthKbRow = document.getElementById("kb-row-five")
 
+let tabCount = 1
+
 var key = (function(){
+
+    keyDivEl = null
+
     return{
         makeKey: function(keyText, id){
             keyDiv = document.createElement("div")
             keyDiv.innerText = keyText
             keyDiv.classList.add("key")
             keyDiv.setAttribute("id", id)
-            
+
+            keyDiv.setAttribute("tabindex", ++tabCount)
+
+            keyDiv.addEventListener("keydown", function(e){
+                keyboard.getKeyPressed(e)
+                console.log("this is Event", e)
+                //console.log(e.key)
+
+                // Assignment//
+                var shift = e.key.shift
+
+                if (e.key == shift){
+                    return  ""
+                }
+
+                else if (e.key == shift + e.key ){
+                    return e.key.toUpperCase()
+
+                    console.log(e.key)
+                }
+
+
+            })
+
+            keyDivEl = keyDiv
+
             return keyDiv
-        }
+        },
+
+       // on: function(eventName, callback){
+         //   keyDivEl.on(eventName,function(e){
+           //     callback(e)
+            //})
+       // }
     }
-})()
+})()  
+
+
 
 tildeKey = key.makeKey("`", "key-first")
+tildeKey.autofocus = true
 OneKey = key.makeKey("1", "key-one")
 TwoKey = key.makeKey("2", "key-two" )
 ThreeKey = key.makeKey("3", "key-three")
@@ -152,3 +191,124 @@ fifthKbRow.appendChild(SpaceKey)
 fifthKbRow.appendChild(AltKey2)
 fifthKbRow.appendChild(WindowKey2)
 fifthKbRow.appendChild(ControlKey2)
+
+var keys = [
+    tildeKey,
+    OneKey ,
+    TwoKey ,
+    ThreeKey,
+    FourKey ,
+    FiveKey ,
+    SixKey ,
+    SevenKey,
+    EightKey ,
+    NineKey,
+    ZeroKey,
+    DashKey,
+    EqualKey,
+    BackspaceKey,
+    
+    TabKey, 
+    QKey, 
+    WKey,
+    EKey,
+    RKey ,
+    TKey ,
+    YKey ,
+    UKey ,
+    IKey ,
+    OKey ,
+    Pkey ,
+    BoxOpenKey ,
+    BoxCloseKey ,
+    Backslash,
+
+    CapsKey ,
+    AKey ,
+    SKey ,
+    DKey ,
+    FKey ,
+    GKey ,
+    HKey ,
+    Jkey ,
+    KKey ,
+    LKey ,
+    ComapointKey ,
+    HaifinKey ,
+    EnterKey ,
+
+    ShiftKey ,
+    ZKey ,
+    XKey ,
+    CKey ,
+    VKey ,
+    BKey ,
+    NKey ,
+    MKey ,
+    LessthanKey ,
+    GreaterthanKey ,
+    QuestionmarkKey ,
+    ShiftKey2, 
+
+    ControlKey ,
+    WindowKey ,
+    AltKey ,
+    SpaceKey ,
+    AltKey2 ,
+    WindowKey2 ,
+    ControlKey2,
+
+
+]
+
+
+var keyboard = (function(keys){
+    var keys = keys
+    var keyPressed = null
+
+    function showKeyPressed(){
+        if (keyPressed !== null){
+            return keyPressed.key
+        }
+        else{
+            return ""
+        }
+    }
+
+    function getKeyPressed(key){
+        keyPressed = key
+        console.log("keyPressed",keyPressed)
+       // this.keyPressed.classList.add(".pressed")
+    }
+
+    return {
+        showKeyPressed: showKeyPressed,
+        getKeyPressed: getKeyPressed
+    }
+
+})(keys)
+
+
+
+var screen = (function(){
+    var keyToShow = null
+    var screenEl = document.getElementById("screen")
+
+    function showKey(){
+        keyToShow = keyboard.showKeyPressed()
+        keysDisplayed = screenEl.innerText
+        keysDisplayed = keysDisplayed + keyToShow 
+        screenEl.innerText = keysDisplayed
+    }
+
+
+    return {
+        showKey : showKey
+    }
+})()
+
+screen.showKey()
+
+setTimeout(() => {
+    console.log('screen key called', screen.showKey())
+}, 5000)

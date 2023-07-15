@@ -10,6 +10,8 @@ body{
 	 background-attachment:fixed;
 	 display:block;
 }
+
+
 .display-container{
 	justify-content:center;
 	align-items:center;
@@ -85,13 +87,17 @@ body{
 	font-size:2rem;
 	border-radius:.5rem;
 }
-.quote-input:focus{
+/*.quote-input:focus{
 	border-color:black;
-}
+}*/
 .keyboard-container{
 		margin:280px 0 0 202px;
 		margin-top:-0.1px
 } 
+
+/*.keyboard-container:focus{
+	outline: none;
+}*/
 .row-one,.row-two,.row-three,.row-four,.row-five{
 	width:100%;
 	margin:10px 0 0 0;
@@ -111,7 +117,26 @@ body{
 	outline:none;
 	font-family:Arial,Helvetica,sans-serif;
 	border-radius:20%;
+	transition: ;
 }
+
+.key:hover{
+	color:red;
+	width:55px;
+	height:55px;
+	border:none;
+	background:white;
+	box-shadow:5px 5px 10px black, -5px -5px -10px white; 
+	font-size:30px;
+	margin-left:5px;
+	padding-left: 1.2rem;
+	padding-top: 1rem;
+	outline:none;
+	font-family:Arial,Helvetica,sans-serif;
+	border-radius:20%;
+	transform: ;
+}
+
 .key:active{
 	box-shadow:1px 1px 2px white, -1px -1px 2px black;
 }
