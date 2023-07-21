@@ -117,10 +117,14 @@ body{
 	outline:none;
 	font-family:Arial,Helvetica,sans-serif;
 	border-radius:20%;
-	transition: ;
+	transition:0.1s ;
 }
 
-.key:hover{
+.key.remove{
+	animation:;
+}
+
+.pressed{
 	color:red;
 	width:55px;
 	height:55px;
@@ -134,7 +138,7 @@ body{
 	outline:none;
 	font-family:Arial,Helvetica,sans-serif;
 	border-radius:20%;
-	transform: ;
+	transform:0.1s ;
 }
 
 .key:active{

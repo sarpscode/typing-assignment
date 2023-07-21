@@ -27,20 +27,7 @@ var key = (function(){
             keyDiv.addEventListener("keydown", function(e){
                 keyboard.getKeyPressed(e)
                 console.log("this is Event", e)
-                //console.log(e.key)
-
-                // Assignment//
-                var shift = e.key.shift
-
-                if (e.key == shift){
-                    return  ""
-                }
-
-                else if (e.key == shift + e.key ){
-                    return e.key.toUpperCase()
-
-                    console.log(e.key)
-                }
+                console.log(e.key)
 
 
             })
@@ -144,7 +131,7 @@ thirdKbRow.appendChild(GKey)
 thirdKbRow.appendChild(HKey)
 thirdKbRow.appendChild(Jkey)
 thirdKbRow.appendChild(KKey)
-thirdKbRow.appendChild(LKey)
+ thirdKbRow.appendChild(LKey)
 thirdKbRow.appendChild(ComapointKey)
 thirdKbRow.appendChild(HaifinKey)
 thirdKbRow.appendChild(EnterKey)
@@ -179,7 +166,7 @@ fourthKbRow.appendChild(ShiftKey2)
 ControlKey = key.makeKey("Ctrl", "key-control")
 WindowKey = key.makeKey("Win", "key-windows")
 AltKey = key.makeKey("Alt", "key-alt")
-SpaceKey = key.makeKey("Space", "key-space")
+SpaceKey = key.makeKey(" ", "key-space")
 AltKey2 = key.makeKey("Alt", "key-alt")
 WindowKey2 = key.makeKey("Win", "key-windows")
 ControlKey2 = key.makeKey("Ctrl", "key-control")
@@ -258,7 +245,6 @@ var keys = [
     WindowKey2 ,
     ControlKey2,
 
-
 ]
 
 
@@ -268,19 +254,52 @@ var keyboard = (function(keys){
 
     function showKeyPressed(){
         if (keyPressed !== null){
-            return keyPressed.key
+            screen.showKey(keyPressed.key)
+        } else {
+            screen.showKey("")
         }
-        else{
-            return ""
-        }
+
     }
+
 
     function getKeyPressed(key){
         keyPressed = key
         console.log("keyPressed",keyPressed)
-       // this.keyPressed.classList.add(".pressed")
-    }
+       showKeyPressed()
 
+      //  for(let i = 0; i < keys.length; i++){
+        //    OneKey.setA ttribute("keyName", OneKey.innerText)
+          //  OneKey.setAttribute("lowerCaseName", OneKey.innerText.toLowerCase)
+        //}
+
+        //for(let i = 0; i < keys.length; i++){
+          //  if(keyPressed.key == OneKey.getAttribute("keyName")|| keyPressed.key == OneKey)
+            //    console.log(OneKey)
+        //}
+
+        keys.forEach((keyDiv) => {
+            for(let i = 0; i < keys.length; i++){
+                keyDiv.setAttribute("keyName", keyDiv.innerText);
+                keyDiv.setAttribute("lowerCaseName", keyDiv.innerText.toLowerCase())
+            }
+
+        
+
+            for(let i = 0; i < keys.length; i++){
+                if(keyPressed.key == keyDiv.getAttribute("keyName") || keyPressed.key == keyDiv.getAttribute("lowerCaseName")){
+                    keyDiv.classList.add("pressed")
+                }else{
+                    keyDiv.classList.remove("pressed")
+                }
+                setTimeout(() => {
+                    keyDiv.classList.remove("pressed")
+                },150)
+
+            }
+           
+        })
+       
+    }
     return {
         showKeyPressed: showKeyPressed,
         getKeyPressed: getKeyPressed
@@ -291,14 +310,40 @@ var keyboard = (function(keys){
 
 
 var screen = (function(){
-    var keyToShow = null
     var screenEl = document.getElementById("screen")
 
-    function showKey(){
-        keyToShow = keyboard.showKeyPressed()
-        keysDisplayed = screenEl.innerText
-        keysDisplayed = keysDisplayed + keyToShow 
+    function showKey(key){
+        keysDisplayed = screenEl.value
+        keysDisplayed = keysDisplayed + key
         screenEl.innerText = keysDisplayed
+
+        console.log("keydisplay ", keysDisplayed.split("") )
+
+        var sentenceArray = sentence.sentenceScreenEl.querySelectorAll('span')
+        console.log('screenElArray', sentenceArray)
+
+        //var screenElArray = screenEl.value.split("")
+
+        var keysArray = keysDisplayed.split("")
+        console.log('keys Array',keysArray)
+
+        sentenceArray.forEach((keySpan, index) => {
+            const character = keysArray[index]
+            if(character == null){
+                keySpan.classList.remove('corrrect')
+                keySpan.classList.remove('incorrect')
+            }
+            else if(character === keySpan.innerText){
+                keySpan.classList.add('correct')
+                keySpan.classList.remove('incorrect')
+            }
+            else{
+                keySpan.classList.remove('correct')
+                keySpan.classList.add('incorrect')
+            }
+        })
+    
+      
     }
 
 
@@ -307,8 +352,98 @@ var screen = (function(){
     }
 })()
 
-screen.showKey()
+    /*var sentenceScreenEl = document.getElementById("sentence")
+    sentenceScreenEl.innerHTML = ""
 
-setTimeout(() => {
-    console.log('screen key called', screen.showKey())
-}, 5000)
+
+var sentence = (function(){
+
+   
+    let randomNumber = Math.floor(Math.random()* 10)+1;
+
+    var showSentence=[
+        'I am a passionate software engineer',
+	    'kessben driving school is the location',
+	    'if it must be done then it must be done well',
+        'Akumadan tomatoes is nice',
+	    'Senior Obed is my Chairman',
+    	'Positive mindset brings positive thing',
+    	'i am the king of wisdom and citizen of zion',
+	    'Telecommunication',		
+	    'Anticipation without solution is foolishness',
+    	'At long last the battle has ended',
+    ];
+
+    function showCurrentSentence(){
+        let currentSentence = showSentence[randomNumber]
+        
+        currentSentence.split('').forEach(key =>{
+            const keySpan = document.createElement('span')
+            keySpan.innerText = key
+           sentenceScreenEl.appendChild(keySpan)
+
+           console.log(keySpan.innerText)
+          
+            
+        })
+
+        
+       // var arrayDisplayQuote = .querySelectAll("keySpan")
+        //console.log("arrayDisplayQuote",arrayDisplayQuote)
+        
+    }
+
+   showCurrentSentence()
+      
+})()*/
+
+
+var sentence = (function(){
+    
+    return{
+        sentenceScreenEl: null,
+
+        showSentence : function(){
+            return{
+                 words:[
+                    'I am a passionate software engineer',
+                    'kessben driving school is the location',
+                    'if it must be done then it must be done well',
+                    'Akumadan tomatoes is nice',
+                    'Senior Obed is my Chairman',
+                    'Positive mindset brings positive thing',
+                    'i am the king of wisdom and citizen of zion',
+                    'Telecommunication',		
+                    'Anticipation without solution is foolishness',
+                    'At long last the battle has ended',
+                ]             
+            }
+        },
+
+        showCurrentSentence: function(){
+        
+
+           // console.log(this.showSentence().words)
+            let randomNumber = Math.floor(Math.random()* 10)+1;
+            let currentSentence = this.showSentence().words[randomNumber]
+        
+            currentSentence.split('').forEach(key =>{
+                this.sentenceScreenEl = document.getElementById("sentence")
+
+                const keySpan = document.createElement('span')
+                keySpan.innerText = key
+               this.sentenceScreenEl.appendChild(keySpan)
+    
+              // console.log(keySpan)
+              
+                
+            })
+        }
+    }
+})()
+
+
+
+sentence.showCurrentSentence()
+
+
