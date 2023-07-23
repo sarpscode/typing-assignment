@@ -319,29 +319,7 @@ var screen = (function(){
 
         console.log("keydisplay ", keysDisplayed.split("") )
 
-        var sentenceArray = sentence.sentenceScreenEl.querySelectorAll('span')
-        console.log('screenElArray', sentenceArray)
-
-        //var screenElArray = screenEl.value.split("")
-
-        var keysArray = keysDisplayed.split("")
-        console.log('keys Array',keysArray)
-
-        sentenceArray.forEach((keySpan, index) => {
-            const character = keysArray[index]
-            if(character == null){
-                keySpan.classList.remove('corrrect')
-                keySpan.classList.remove('incorrect')
-            }
-            else if(character === keySpan.innerText){
-                keySpan.classList.add('correct')
-                keySpan.classList.remove('incorrect')
-            }
-            else{
-                keySpan.classList.remove('correct')
-                keySpan.classList.add('incorrect')
-            }
-        })
+       sentence.compareKey(keysDisplayed)
     
       
     }
@@ -424,8 +402,9 @@ var sentence = (function(){
         
 
            // console.log(this.showSentence().words)
-            let randomNumber = Math.floor(Math.random()* 10)+1;
+            let randomNumber = Math.floor(Math.random()* 9)+1;
             let currentSentence = this.showSentence().words[randomNumber]
+            console.log(randomNumber)
         
             currentSentence.split('').forEach(key =>{
                 this.sentenceScreenEl = document.getElementById("sentence")
@@ -438,12 +417,39 @@ var sentence = (function(){
               
                 
             })
+        },
+
+        compareKey: function(keysDisplayed){
+            var sentenceArray = sentence.sentenceScreenEl.querySelectorAll('span')
+            console.log('screenElArray', sentenceArray)
+    
+            //var screenElArray = screenEl.value.split("")
+    
+            var keysArray = keysDisplayed.split("")
+            console.log('keys Array',keysArray)
+    
+            sentenceArray.forEach((keySpan, index) => {
+                const character = keysArray[index]
+                if(character == null){
+                    keySpan.classList.remove('corrrect')
+                    keySpan.classList.remove('incorrect')
+                }
+                else if(character === keySpan.innerText){
+                    keySpan.classList.add('correct')
+                    keySpan.classList.remove('incorrect')
+                }
+                else{
+                    keySpan.classList.remove('correct')
+                    keySpan.classList.add('incorrect')
+                }
+            })
         }
     }
+
 })()
 
-
-
 sentence.showCurrentSentence()
+
+
 
 
