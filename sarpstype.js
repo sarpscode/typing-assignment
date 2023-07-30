@@ -165,9 +165,9 @@ fourthKbRow.appendChild(ShiftKey2)
 
 ControlKey = key.makeKey("Ctrl", "key-control")
 WindowKey = key.makeKey("Win", "key-windows")
-AltKey = key.makeKey("Alt", "key-alt")
-SpaceKey = key.makeKey(" ", "key-space")
-AltKey2 = key.makeKey("Alt", "key-alt")
+AltKey = key.makeKey("alt", "key-alt")
+SpaceKey = key.makeKey("Space", "key-space")
+AltKey2 = key.makeKey("alt", "key-alt")
 WindowKey2 = key.makeKey("Win", "key-windows")
 ControlKey2 = key.makeKey("Ctrl", "key-control")
 
@@ -255,10 +255,24 @@ var keyboard = (function(keys){
     function showKeyPressed(){
         if (keyPressed !== null){
             screen.showKey(keyPressed.key)
-        } else {
+        }
+       // else if(keyPressed.key.length > 1 ){
+         //   console.log(keyPressed.key.length)
+           // keyPressed.isTrusted = false
+       //}
+     else {
             screen.showKey("")
         }
 
+    }
+
+    function moreKeys(keyPressed){
+        if(keyPressed.key = "Shift"){ 
+           console.log( keyPressed.bubbles)
+           // keyPressed.setAttribute("disabled","disabled")
+            console.log("im morethan one")
+           
+        }
     }
 
 
@@ -266,16 +280,8 @@ var keyboard = (function(keys){
         keyPressed = key
         console.log("keyPressed",keyPressed)
        showKeyPressed()
+       moreKeys(keyPressed)
 
-      //  for(let i = 0; i < keys.length; i++){
-        //    OneKey.setA ttribute("keyName", OneKey.innerText)
-          //  OneKey.setAttribute("lowerCaseName", OneKey.innerText.toLowerCase)
-        //}
-
-        //for(let i = 0; i < keys.length; i++){
-          //  if(keyPressed.key == OneKey.getAttribute("keyName")|| keyPressed.key == OneKey)
-            //    console.log(OneKey)
-        //}
 
         keys.forEach((keyDiv) => {
             for(let i = 0; i < keys.length; i++){
@@ -288,7 +294,29 @@ var keyboard = (function(keys){
             for(let i = 0; i < keys.length; i++){
                 if(keyPressed.key == keyDiv.getAttribute("keyName") || keyPressed.key == keyDiv.getAttribute("lowerCaseName")){
                     keyDiv.classList.add("pressed")
-                }else{
+                }
+                else if(keyPressed.code == "Space"){
+                    SpaceKey.classList.add("pressed")
+                }
+                else if(keyPressed.code == "Backspace"){
+                    BackspaceKey.classList.add("pressed")
+                } 
+                else if(keyPressed.code == "AltRight"){
+                    AltKey2.classList.add("pressed")
+                }
+                else if(keyPressed.code == "AltLeft"){
+                    AltKey.classList.add("pressed")
+                }
+                else if(keyPressed.code == "ControlLeft"){
+                    ControlKey.classList.add("pressed")
+                }
+                else if(keyPressed.code == "ControlRight"){
+                    ControlKey2.classList.add("pressed")
+                }
+                else if(keyPressed.code == "CapsLock"){
+                    CapsKey.classList.toggle("pressed")
+                }
+                 else{
                     keyDiv.classList.remove("pressed")
                 }
                 setTimeout(() => {
@@ -302,7 +330,8 @@ var keyboard = (function(keys){
     }
     return {
         showKeyPressed: showKeyPressed,
-        getKeyPressed: getKeyPressed
+        getKeyPressed: getKeyPressed,
+        moreKeys:moreKeys
     }
 
 })(keys)
@@ -319,67 +348,21 @@ var screen = (function(){
 
         console.log("keydisplay ", keysDisplayed.split("") )
 
-       sentence.compareKey(keysDisplayed)
-    
+       sentence.compareKey(screenEl)
+        
       
     }
-
-
     return {
         showKey : showKey
     }
 })()
 
-    /*var sentenceScreenEl = document.getElementById("sentence")
-    sentenceScreenEl.innerHTML = ""
-
-
-var sentence = (function(){
-
-   
-    let randomNumber = Math.floor(Math.random()* 10)+1;
-
-    var showSentence=[
-        'I am a passionate software engineer',
-	    'kessben driving school is the location',
-	    'if it must be done then it must be done well',
-        'Akumadan tomatoes is nice',
-	    'Senior Obed is my Chairman',
-    	'Positive mindset brings positive thing',
-    	'i am the king of wisdom and citizen of zion',
-	    'Telecommunication',		
-	    'Anticipation without solution is foolishness',
-    	'At long last the battle has ended',
-    ];
-
-    function showCurrentSentence(){
-        let currentSentence = showSentence[randomNumber]
-        
-        currentSentence.split('').forEach(key =>{
-            const keySpan = document.createElement('span')
-            keySpan.innerText = key
-           sentenceScreenEl.appendChild(keySpan)
-
-           console.log(keySpan.innerText)
-          
-            
-        })
-
-        
-       // var arrayDisplayQuote = .querySelectAll("keySpan")
-        //console.log("arrayDisplayQuote",arrayDisplayQuote)
-        
-    }
-
-   showCurrentSentence()
-      
-})()*/
-
-
-var sentence = (function(){
     
+var sentence = (function(){
     return{
         sentenceScreenEl: null,
+
+        bongoEl: null,
 
         showSentence : function(){
             return{
@@ -411,7 +394,7 @@ var sentence = (function(){
 
                 const keySpan = document.createElement('span')
                 keySpan.innerText = key
-               this.sentenceScreenEl.appendChild(keySpan)
+                this.sentenceScreenEl.appendChild(keySpan)
     
               // console.log(keySpan)
               
@@ -419,14 +402,25 @@ var sentence = (function(){
             })
         },
 
+        
+
         compareKey: function(keysDisplayed){
-            var sentenceArray = sentence.sentenceScreenEl.querySelectorAll('span')
-            console.log('screenElArray', sentenceArray)
+           
+            var sentenceArray = this.sentenceScreenEl.querySelectorAll('span')
+            //console.log('sentenceElArray', sentenceArray.length)
+
+            var screenElArrayLength = sentenceArray.length
+            console.log(screenElArrayLength)
+
+            var correctMarks = 100 / screenElArrayLength
+            console.log(correctMarks)
+
+            var scores = 0
     
             //var screenElArray = screenEl.value.split("")
     
-            var keysArray = keysDisplayed.split("")
-            console.log('keys Array',keysArray)
+            var keysArray = keysDisplayed.value.split("")
+            console.log('keys Array',keysDisplayed)
     
             sentenceArray.forEach((keySpan, index) => {
                 const character = keysArray[index]
@@ -437,6 +431,9 @@ var sentence = (function(){
                 else if(character === keySpan.innerText){
                     keySpan.classList.add('correct')
                     keySpan.classList.remove('incorrect')
+                    scores = scores + correctMarks
+                    score.getScore(scores)
+
                 }
                 else{
                     keySpan.classList.remove('correct')
@@ -449,6 +446,25 @@ var sentence = (function(){
 })()
 
 sentence.showCurrentSentence()
+
+
+var score = (function(){  
+    var scoreEl = document.getElementById("score")
+    
+
+    return{
+
+       getScore : function(marks){
+            scoreItem = marks 
+            //scoreItem = scoreItem  
+            scoreEl.innerHTML = scoreItem
+            console.log(scoreItem )
+            
+           
+        },
+
+    }
+})()
 
 
 
