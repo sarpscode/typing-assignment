@@ -251,10 +251,14 @@ var keys = [
 var keyboard = (function(keys){
     var keys = keys
     var keyPressed = null
-
+    var moreKeys = ["Shift","Control","Backspace","Alt","CapsLock","Tab","Enter"]
+    //var keyCode = ["Space","Backspace","AltRight","AltLeft","ControlLeft","ControlRight",]
     function showKeyPressed(){
         if (keyPressed !== null){
-            screen.showKey(keyPressed.key)
+            if(!moreKeys.includes(keyPressed.key)){
+                screen.showKey(keyPressed.key)
+            }
+            
         }
        // else if(keyPressed.key.length > 1 ){
          //   console.log(keyPressed.key.length)
@@ -266,21 +270,21 @@ var keyboard = (function(keys){
 
     }
 
-    function moreKeys(keyPressed){
-        if(keyPressed.key = "Shift"){ 
-           console.log( keyPressed.bubbles)
+    //function moreKeys(keyPressed){
+      //  if(keyPressed.key = "Shift"){ 
+        //   console.log( keyPressed.bubbles)
            // keyPressed.setAttribute("disabled","disabled")
-            console.log("im morethan one")
+          //  console.log("im morethan one")
            
-        }
-    }
+        //}
+    //}
 
 
     function getKeyPressed(key){
         keyPressed = key
         console.log("keyPressed",keyPressed)
        showKeyPressed()
-       moreKeys(keyPressed)
+     //  moreKeys(keyPressed)
 
 
         keys.forEach((keyDiv) => {
@@ -331,7 +335,7 @@ var keyboard = (function(keys){
     return {
         showKeyPressed: showKeyPressed,
         getKeyPressed: getKeyPressed,
-        moreKeys:moreKeys
+       // moreKeys:moreKeys
     }
 
 })(keys)
@@ -432,7 +436,7 @@ var sentence = (function(){
                     keySpan.classList.add('correct')
                     keySpan.classList.remove('incorrect')
                     scores = scores + correctMarks
-                    score.getScore(scores)
+                    score.getScore(Math.round(scores))
 
                 }
                 else{
